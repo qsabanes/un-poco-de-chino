@@ -10,7 +10,8 @@ Una web para repasar chino al ritmo de la clase, en PC y móvil.
 - Reconocimiento de caracteres desde pinyin y construcción de frases sin teclado chino.
 - Tarjetas con repetición espaciada, vocabulario de clase y mazos opcionales HSK 1–3 de 2026.
 - Tabla de 403 sílabas y 1.612 audios, comparación de tonos y ejercicios de escucha.
-- Trabalenguas con elección de tono por sílaba, lectura opcional y corrección.
+- Trabalenguas con elección de tono por sílaba, corrección y audio completo en mandarín (voz sintetizada, normal y lento).
+- Contrastes de pronunciación b/p, d/t, g/k, j/q/x, s/sh y otros, manteniendo el mismo tono.
 - Compositor de pinyin a caracteres e importación personal de audios del libro.
 
 El progreso y las grabaciones se guardan en el navegador. Puedes exportar el

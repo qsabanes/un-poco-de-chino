@@ -102,5 +102,14 @@ TRABALENGUAS
 En Sonidos > Trabalenguas se elige un tono para la sílaba destacada.
 Incluye dos fragmentos tradicionales y un juego de dicción creado,
 con significado, lectura opcional, tonos neutros y modelos aislados de audio.
-No se presenta una grabación completa de los trabalenguas. Los intentos se
+Las lecturas completas usan voz sintetizada en mandarín. Los intentos se
 guardan y exportan junto al progreso de pronunciación.
+
+ACTUALIZACIÓN DE AUDIO Y CONTRASTES
+Los trabalenguas tienen audio completo con controles visibles, versiones
+normal y lenta con voz sintetizada en mandarín. Al elegir un tono suena
+la elección; después se puede escuchar el tono correcto. El tono neutro
+se presenta en la palabra 妈妈. Las voces se incluyen como archivos MP3.
+Distinguir sílabas usa contrastes b/p, d/t, g/k, j/q/x, z/zh, c/ch, s/sh,
+n/l y finales nasales. Todas las opciones de cada pregunta tienen el
+mismo tono y se pueden comparar después de responder.

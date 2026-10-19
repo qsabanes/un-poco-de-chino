@@ -1,0 +1,65 @@
+{
+  "type": "synthetic-speech",
+  "provider": "Microsoft Edge text-to-speech",
+  "client": "edge-tts 7.3.1",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "generated": "2026-10-19",
+  "recordings": [
+    {
+      "file": "four-ten-normal.mp3",
+      "text": "四是四，十是十，十四是十四，四十是四十。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-10%",
+      "duration": 5.78,
+      "bytes": 34704
+    },
+    {
+      "file": "four-ten-slow.mp3",
+      "text": "四是四，十是十，十四是十四，四十是四十。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-35%",
+      "duration": 7.99,
+      "bytes": 47952
+    },
+    {
+      "file": "north-slope-normal.mp3",
+      "text": "八百标兵奔北坡。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-10%",
+      "duration": 2.42,
+      "bytes": 14544
+    },
+    {
+      "file": "north-slope-slow.mp3",
+      "text": "八百标兵奔北坡。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-35%",
+      "duration": 3.36,
+      "bytes": 20160
+    },
+    {
+      "file": "mother-horse-normal.mp3",
+      "text": "妈妈骑马，马慢，妈妈骂马。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-10%",
+      "duration": 3.6,
+      "bytes": 21600
+    },
+    {
+      "file": "mother-horse-slow.mp3",
+      "text": "妈妈骑马，马慢，妈妈骂马。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-35%",
+      "duration": 4.94,
+      "bytes": 29664
+    },
+    {
+      "file": "mama-context-normal.mp3",
+      "text": "妈妈。",
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "rate": "-10%",
+      "duration": 1.87,
+      "bytes": 11232
+    }
+  ]
+}

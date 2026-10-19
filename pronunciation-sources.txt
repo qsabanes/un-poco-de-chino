@@ -13,3 +13,11 @@ Las autorizaciones de las listas HSK se documentan por separado.
 Se utilizan únicamente las sílabas y los cuatro tonos con grabaciones
 disponibles en la tabla. La práctica de tono neutro requiere contexto.
 Las curvas, explicaciones y ejercicios de esta app son material de estudio.
+
+LECTURAS COMPLETAS DE TRABALENGUAS
+Archivos en audio/twisters/: voz sintetizada en mandarín, Microsoft
+zh-CN-XiaoxiaoNeural, generada con edge-tts 7.3.1 el 19-10-2026.
+Hay versiones normal y lenta para cada trabalenguas y un modelo de 妈妈
+para practicar el tono neutro en contexto. Los detalles y textos exactos
+se documentan en audio/twisters/sources.json.
+Estas lecturas no son grabaciones de Yoyo Chinese.
