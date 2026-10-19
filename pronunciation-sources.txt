@@ -1,0 +1,15 @@
+AUDIOS DE PRONUNCIACIÓN
+
+Fuente: Yoyo Chinese, Interactive Pinyin Chart.
+https://yoyochinese.com/chinese-learning-tools/Mandarin-Chinese-pronunciation-lesson/pinyin-chart-table
+Grabaciones originales: https://cdn.yoyochinese.com/audio/pychart/
+Consultado el 19 de octubre de 2026.
+
+Las grabaciones se han incorporado con autorización expresa del usuario,
+quien declara ser propietario de la web y permite reutilizar sus audios.
+Se mantiene el crédito a Yoyo Chinese. No se les asigna una licencia abierta.
+Las autorizaciones de las listas HSK se documentan por separado.
+
+Se utilizan únicamente las sílabas y los cuatro tonos con grabaciones
+disponibles en la tabla. La práctica de tono neutro requiere contexto.
+Las curvas, explicaciones y ejercicios de esta app son material de estudio.

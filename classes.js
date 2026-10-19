@@ -1,0 +1,19 @@
+export const classes=[
+ {id:1,title:'Los primeros sonidos y trazos',subtitle:'Pinyin, tonos y cómo funciona la escritura china.',sources:['1. S1_pinyin.pdf','2. S1_El idioma chino.pdf'],topics:['Iniciales y finales','Cuatro tonos','Caracteres y trazos'],book:'Introducción al idioma y al pinyin'},
+ {id:2,title:'Hola. Me llamo…',subtitle:'Saludar, preguntar qué tal estás y presentarte.',sources:['U2.1 (S2).pdf'],topics:['Qué tal y cortesía','Nombres y apellidos','Pronombres'],book:'Camino al chino I · material de U2'},
+ {id:3,title:'¿De qué nacionalidad eres?',subtitle:'Países, nacionalidades y primeras preguntas de sí o no.',sources:['U2.2 (S3).pdf'],topics:['Países y nacionalidades','Preguntas con 吗','Negación y tono de 不'],book:'Camino al chino I · material de U2'},
+];
+export const initialGroups=[['b · p · m · f','Labios'],['d · t · n · l','Zona de los dientes y encías'],['g · k · h','Zona posterior de la boca'],['j · q · x','Grupo que se practica con i y ü'],['zh · ch · sh · r','Grupo retroflejo'],['z · c · s','Grupo dental']];
+export const finalGroups=[['a · o · e · i · u · ü','Vocales básicas'],['ai · ei · ao · ou','Combinaciones vocálicas'],['er','Final propia de sílabas como èr'],['an · en · in · un · ün','Finales terminadas en -n'],['ang · eng · ing · ong','Finales terminadas en -ng'],['ia · ie · iao · iou (iu) · ian · iang · iong','Combinaciones con i'],['ua · uo · uai · uei (ui) · uan · uen (un) · uang · ueng','Combinaciones con u'],['üe · üan · ün','Combinaciones con ü']];
+export const tones=[['mā','1','alto y sostenido'],['má','2','ascendente'],['mǎ','3','bajo; en aislamiento baja y sube'],['mà','4','descendente'],['ma','neutro','breve y sin marca de tono']];
+export const characterNotes=[
+ ['El carácter no es una letra','Un carácter tiene una forma escrita, una pronunciación y uno o varios usos o significados. Una palabra puede tener uno o más caracteres: 你 (nǐ), 认识 (rènshi).'],
+ ['Sonido y escritura se aprenden juntos','Conocer rènshi no garantiza reconocer 认识. Practica el vínculo en las dos direcciones, con palabras que ya has trabajado.'],
+ ['Ocho trazos de referencia','点 diǎn (punto), 横 héng (horizontal), 竖 shù (vertical), 撇 piě, 捺 nà, 提 tí, 钩 gōu y 弯 wān. Sus combinaciones construyen los caracteres.'],
+ ['Orden y estructura','Como reglas generales: de arriba abajo, de izquierda a derecha y horizontal antes de vertical. Hay reglas y excepciones según la forma del carácter; usa el modelo de clase al escribir en papel.'],
+ ['Componentes que ayudan a recordar','En 休, persona 亻 junto a árbol 木 ayuda a recordar «descansar». En los caracteres compuestos, un componente puede orientar sobre el significado o sobre el sonido; no es una regla infalible.'],
+];
+export const dialogues={
+ 2:[['A','你好！你怎么样？','Nǐ hǎo! Nǐ zěnmeyàng?','¡Hola! ¿Qué tal estás?'],['B','很好。你呢？','Hěn hǎo. Nǐ ne?','Muy bien. ¿Y tú?'],['A','不错。你叫什么名字？','Bú cuò. Nǐ jiào shénme míngzi?','Bastante bien. ¿Cómo te llamas?'],['B','我叫安娜。你呢？','Wǒ jiào Ānnà. Nǐ ne?','Me llamo Anna. ¿Y tú?'],['A','我叫李明。认识你很高兴！','Wǒ jiào Lǐ Míng. Rènshi nǐ hěn gāoxìng!','Me llamo Li Ming. ¡Encantado de conocerte!'],['B','认识你，我也很高兴！','Rènshi nǐ, wǒ yě hěn gāoxìng!','¡Yo también me alegro de conocerte!']],
+ 3:[['A','你是哪国人？','Nǐ shì nǎ guó rén?','¿De qué nacionalidad eres?'],['B','我是西班牙人。你是中国人吗？','Wǒ shì Xībānyárén. Nǐ shì Zhōngguórén ma?','Soy española. ¿Eres chino?'],['A','不是，我是美国人。','Bú shì, wǒ shì Měiguórén.','No, soy estadounidense.']],
+};

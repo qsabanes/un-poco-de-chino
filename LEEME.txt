@@ -1,0 +1,106 @@
+UN POCO DE CHINO · Chino en clase · Sesiones 1, 2 y 3
+
+ABRIR EN TU ORDENADOR
+Esta app necesita un servidor HTTP local (no abrir index.html con doble clic).
+Desde esta carpeta, con Python instalado:
+  python -m http.server 8765 --bind 127.0.0.1
+Después abre http://127.0.0.1:8765
+
+GITHUB PAGES
+Sube el contenido de esta carpeta a la raíz de un repositorio en GitHub.
+En Settings > Pages, selecciona GitHub Actions como origen.
+El flujo .github/workflows/pages.yml publica al hacer push a main o al
+ejecutarlo manualmente. El sitio publicado será público.
+Todas las rutas de la app son relativas: admite repositorios de proyecto.
+prepare-dist.mjs copia los archivos públicos a dist/ sin dependencias.
+
+CONTENIDO
+35 palabras/expresiones de clase, 3 extras opcionales, 6 fichas de gramática,
+diálogos creados y 67 ejercicios activos (65 de clase y 2 extras),
+además de las tandas de escucha de sílabas y tonos.
+Materiales de referencia: U1, U2.1 (S2), U2.2 (S3), mensajes de la profesora.
+Los ejercicios son adaptaciones creadas para estudiar, no un solucionario.
+No se han publicado los PDF, los mensajes completos ni el enlace del grupo.
+
+AUDIOS
+En Audios, importa OneDrive_2026-10-19.zip o selecciona varios MP3 del libro.
+Los nombres esperados son 01-1.mp3, 01-3.mp3, 02-1.mp3, etc.
+Se guardan en IndexedDB en el navegador, sin subirlos al servidor.
+La importación ZIP requiere DecompressionStream('deflate-raw'); si tu
+navegador no lo soporta, extrae el ZIP e importa los MP3.
+Solo 01-3 está relacionada con un ejercicio verificado (libro p. 6, ej. 2,
+según el foro). El resto se muestra por número, sin transcripción.
+Puedes marcar A y B en una pista para repetir un fragmento, grabarte,
+escucharte y descargar tu grabación. El micrófono requiere permiso y
+un contexto seguro (HTTPS o localhost). No se evalúa tu pronunciación.
+
+PROGRESO Y REPASO
+Los fallos vencen a los 10 minutos; los aciertos a 1, 3, 7 y 14 días según
+la racha del ejercicio. El repaso mezcla ejercicios pendientes y nuevos.
+Repasar errores permite volver sobre los fallos sin esperar.
+Los intentos se guardan al responder, aunque abandones una sesión.
+No hay cuentas ni sincronización automática. En Progreso puedes exportar
+un JSON y cargarlo en otro dispositivo. Importar sustituye el progreso.
+Los audios y grabaciones no se incluyen en esa exportación.
+No necesitas teclado chino: las frases se construyen tocando bloques y
+las preguntas se responden eligiendo opciones. Puedes mostrar u ocultar
+el pinyin como ayuda. Solo los ejercicios de pinyin requieren escribir;
+aceptan letras con números de tono, por ejemplo ni3, o marcas como nǐ.
+El navegador puede borrar sus datos al limpiar almacenamiento; guarda
+una copia periódica. El modo privado puede limitar la persistencia.
+
+OFFLINE
+Tras una primera visita con conexión, la app guarda sus archivos para
+volver a abrirlos sin conexión. Las fuentes de Google son opcionales:
+sin red se usan las fuentes locales del dispositivo.
+El enlace de una publicación y localhost guardan progresos distintos.
+
+Repositorio: https://github.com/qsabanes/un-poco-de-chino
+GitHub Pages: https://qsabanes.github.io/un-poco-de-chino/
+La demostración previa de Sites se aloja por separado.
+
+ACTUALIZACIÓN POR SESIONES
+La navegación principal sigue S1, S2 y S3. S1 incluye fichas de iniciales,
+finales, tonos y escritura. U1 figura como complemento sin sesión confirmada.
+Hay 40 ejercicios de reconocimiento de caracteres desde pinyin y 8 de bases.
+En Practicar puedes filtrar por sesión y elegir palabras o frases conocidas.
+Las ayudas de reconocimiento empiezan ocultas y se pueden revelar.
+Se conservan los identificadores antiguos y el progreso anterior.
+
+S2 incluye 你怎么样？ y las respuestas 很好、不错、还可以、不太好,
+con vocabulario, una ficha de estructuras, diálogo y reconocimiento.
+
+TARJETAS Y TECLADO DE PRÁCTICA
+Tarjetas se alimenta del vocabulario de clase. También incluye las
+1.000 entradas de los niveles 1–3 del programa HSK 2026 (300+200+500).
+Los niveles HSK están desactivados en el repaso combinado hasta elegirlos.
+Las glosas españolas son ayudas de estudio, no traducciones oficiales.
+Fuentes y licencias en hsk-sources.txt.
+Dos sentidos de recuerdo, con progreso separado: pinyin a caracteres y
+caracteres a pinyin/significado. Se exportan en el JSON de progreso.
+Valoraciones: Otra vez (1 min y repetición en la tanda), Difícil
+(10 min para tarjetas nuevas), Bien (1 día inicial), Fácil (4 días iniciales).
+Los siguientes intervalos crecen según las valoraciones. Es un algoritmo
+sencillo, no el planificador de Anki ni una integración con esa aplicación.
+El botón Teclado chino abre un compositor de pinyin con candidatos del
+vocabulario de clase y HSK 1–3. Funciona localmente, admite frases conocidas,
+Espacio/Intro, flechas y copia del resultado; no instala un teclado del sistema.
+
+SONIDOS Y TONOS
+403 sílabas y 1.612 grabaciones de Yoyo Chinese, reutilizadas con autorización
+expresa del usuario. Fuentes en pronunciation-sources.txt. No se asigna una
+licencia abierta a estas grabaciones. La selección Para empezar es una
+introducción de estudio a los grupos de S1, no una lista transcrita del aula.
+Tabla con búsqueda, filtros por inicial, cuatro tonos, velocidad 0,8×,
+ejercicios de reconocimiento de tonos y sílabas, y grabación personal.
+Las ocho preguntas introductorias sobre letras y trazos se retiran del
+repaso automático; sus identificadores se conservan para importar progreso.
+Los intentos de escucha se guardan y exportan en el JSON de progreso.
+Los audios se almacenan sin conexión a medida que se escuchan.
+
+TRABALENGUAS
+En Sonidos > Trabalenguas se elige un tono para la sílaba destacada.
+Incluye dos fragmentos tradicionales y un juego de dicción creado,
+con significado, lectura opcional, tonos neutros y modelos aislados de audio.
+No se presenta una grabación completa de los trabalenguas. Los intentos se
+guardan y exportan junto al progreso de pronunciación.
