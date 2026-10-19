@@ -155,6 +155,7 @@ function go(){let next=location.hash.slice(1).split('?')[0]||'hoy';if(route==='a
 document.addEventListener('click',e=>{
  const target=e.target.closest('button,a');if(!target)return;
  if(target.dataset.cardStart!==undefined){route='tarjetas';location.hash='tarjetas';}
+ if(target.id==='sound-my-tone')stopAudio();
  if(pronunciation.onClick(target)||studyTools.onClick(target))return;
  if(target.dataset.train){practiceScope=target.dataset.scope||'';route='practicar';location.hash='practicar';startSession(target.dataset.train);}
  if(target.dataset.tab){lessonTab=target.dataset.tab;render();$(`[data-tab="${lessonTab}"]`)?.focus();}

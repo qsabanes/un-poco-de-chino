@@ -113,3 +113,12 @@ se presenta en la palabra 妈妈. Las voces se incluyen como archivos MP3.
 Distinguir sílabas usa contrastes b/p, d/t, g/k, j/q/x, z/zh, c/ch, s/sh,
 n/l y finales nasales. Todas las opciones de cada pregunta tienen el
 mismo tono y se pueden comparar después de responder.
+
+MI TONO · EXPERIMENTAL
+Práctica con sílabas aisladas y tonos 1–4: modelo, grabación de 3 segundos,
+curva de altura de voz y descripción orientativa. Se analiza localmente;
+no requiere claves ni un servidor de reconocimiento de voz. No evalúa
+consonantes ni vocales. La detección del tercer tono bajo puede ser ambigua.
+Los intentos no se convierten en aciertos ni en notas. Se puede cargar un
+audio de hasta 6 segundos y 5 MB. Al salir de esta práctica se descarta
+la grabación temporal. El micrófono requiere permiso y HTTPS o localhost.

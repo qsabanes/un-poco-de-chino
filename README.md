@@ -11,6 +11,7 @@ Una web para repasar chino al ritmo de la clase, en PC y móvil.
 - Tarjetas con repetición espaciada, vocabulario de clase y mazos opcionales HSK 1–3 de 2026.
 - Tabla de 403 sílabas y 1.612 audios, comparación de tonos y ejercicios de escucha.
 - Trabalenguas con elección de tono por sílaba, corrección y audio completo en mandarín (voz sintetizada, normal y lento).
+- Práctica experimental de tonos con micrófono, curva de voz y orientación local, sin evaluar consonantes ni vocales.
 - Contrastes de pronunciación b/p, d/t, g/k, j/q/x, s/sh y otros, manteniendo el mismo tono.
 - Compositor de pinyin a caracteres e importación personal de audios del libro.
 
@@ -44,3 +45,27 @@ Los PDF, los mensajes completos de clase y los audios del libro no se publican.
 
 La publicación del repositorio no concede una licencia general para reutilizar
 las grabaciones. Consulta los permisos de cada recurso.
+
+## Práctica de tonos
+
+En Sonidos > Mi tono se compara la curva del modelo con una grabación de una
+sola sílaba. El análisis de periodicidad se ejecuta localmente en un Web Worker,
+sin subir la grabación. También se pueden cargar audios breves de hasta 6 segundos.
+Las curvas se centran en semitonos y se normaliza el tiempo para comparar voces.
+Se rechazan señales débiles, saturadas, discontinuas o difíciles de seguir.
+Los resultados son descripciones orientativas, no puntuaciones validadas.
+No se evalúan consonantes, vocales, frases ni el tono neutro; un tercer tono
+bajo puede ser ambiguo. Las grabaciones se descartan al salir de esta práctica.
+
+Método de periodicidad inspirado en YIN (de Cheveigné y Kawahara, 2002):
+https://doi.org/10.1121/1.1458024
+
+Comprobaciones locales, sin dependencias de pruebas:
+
+```sh
+node tests/pitch-analysis.test.mjs
+node tests/tone-lifecycle.test.mjs
+```
+
+Las pruebas cubren señales sintéticas, calidad de señal y liberación del
+micrófono. No constituyen una validación pedagógica con estudiantes.
