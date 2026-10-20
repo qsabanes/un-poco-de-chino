@@ -11,7 +11,7 @@ const classWords=[...vocabulary.filter(v=>!v.extra),{id:'nimenhao',hanzi:'你们
 classWords.forEach((v,index)=>{
  let c=byWord.get(wordKey(v.hanzi,v.pinyin));
  if(!c){c={id:'class-'+v.id,hanzi:v.hanzi,pinyin:v.pinyin,meaning:v.meaning,decks:[],source:v.source};cardLibrary.push(c);byWord.set(wordKey(v.hanzi,v.pinyin),c);}
- c.meaning=v.meaning;c.classOrder=index;c.classSource=v.source;c.decks.push('class',...sessionsForSource(v.source).map(n=>'s'+n));c.decks=[...new Set(c.decks)];
+ c.meaning=v.meaning;c.classOrder=index;c.classSource=v.source;c.classCategory=v.category;c.decks.push('class',...sessionsForSource(v.source).map(n=>'s'+n));c.decks=[...new Set(c.decks)];
 });
 export const cardIds=new Set(cardLibrary.map(c=>c.id));
 export const flashDefaults=()=>({records:{},enabledHSK:[],direction:'hanzi',directionVersion:2,newLimit:10});
@@ -38,11 +38,23 @@ export function rateCard(previous,rating,now=Date.now()){
  return {reviews:old.reviews+1,lapses:old.lapses+(rating==='again'?1:0),interval,ease,due:now+delay,last:now,introduced:old.introduced,rating};
 }
 export function delayLabel(record,now=Date.now()){const delay=record.due-now;return delay<120000?'1 min':delay<DAY?'10 min':Math.round(delay/DAY)+' d';}
-export function cardsForScope(scope,enabledHSK=[]){return cardLibrary.filter(c=>scope==='active'?c.decks.includes('class')||enabledHSK.some(n=>c.decks.includes('hsk'+n)):c.decks.includes(scope));}
+function sessionPage(card,scope){
+ const label=/^s[123]$/.test(scope)?scope.toUpperCase():null;
+ if(!label)return 10000;
+ const source=card.classSource||card.source;
+ const part=source.split(';').find(s=>s.includes(label)||(scope==='s1'&&s.includes('U1')));
+ return Number(part?.match(/pp?\.\s*(\d+)/)?.[1]||10000);
+}
+function sessionTopic(card,scope){
+ if(scope!=='s3')return 0;
+ if(card.classCategory!=='países')return 3;
+ return card.hanzi.length===1?2:card.hanzi.endsWith('人')?1:0;
+}
+export function cardsForScope(scope,enabledHSK=[]){return cardLibrary.filter(c=>scope==='active'?c.decks.includes('class')||enabledHSK.some(n=>c.decks.includes('hsk'+n)):c.decks.includes(scope)).sort((a,b)=>sessionTopic(a,scope)-sessionTopic(b,scope)||sessionPage(a,scope)-sessionPage(b,scope)||(a.classOrder??10000)-(b.classOrder??10000));}
 export function reviewQueue(cards,records,direction,newLimit=10,now=Date.now()){
  const key=c=>c.id+'::'+direction;
  const due=cards.filter(c=>records[key(c)]&&records[key(c)].due<=now).sort((a,b)=>records[key(a)].due-records[key(b)].due).slice(0,30);
- const unseen=cards.filter(c=>!records[key(c)]).sort((a,b)=>(a.classOrder??10000)-(b.classOrder??10000)).slice(0,newLimit);
+ const unseen=cards.filter(c=>!records[key(c)]).slice(0,newLimit);
  return [...due,...unseen];
 }
 
@@ -75,8 +87,8 @@ export function createStudyTools({getState,save,render,toast,icon,escape}){
  }
  function studyHTML(){
   if(study.index>=study.queue.length)return `<section class="card flash-finished"><span class="result-mark hanzi">好</span><h1>${study.reviewed?'Un poco más afianzado.':'Tu repaso está al día.'}</h1><p>${study.reviewed?study.reviewed+' valoraciones guardadas.':'No quedan tarjetas pendientes ni nuevas para esta tanda.'}</p><p class="muted">Puedes volver más tarde, ampliar tus mazos o revisar tarjetas antes de que venzan.</p><div class="button-row"><button class="button primary" id="card-decks">Volver a mis mazos</button><button class="button ghost" id="card-free">Revisar anticipadamente</button></div></section>`;
-  const c=study.queue[study.index],record=fs().records[c.id+'::'+study.direction];
-  return `<div class="session-shell"><div class="session-header"><span>TARJETAS · ${study.direction==='pinyin'?'Pinyin → caracteres':'Caracteres → pinyin'}</span><button class="text-link" id="card-decks">Mis mazos ${icon('close')}</button></div><div class="progress-bar"><span style="width:${study.index/study.queue.length*100}%"></span></div><section class="card flash-card"><div class="question-meta">${tag(c.decks.includes('class')?'DE TU CLASE':'HSK '+c.level+' · 2026')}<small>${record?'Repaso':'Nueva'} · ${study.index+1} de ${study.queue.length}</small></div><span class="eyebrow">${study.flipped?'COMPRUEBA LO QUE RECORDABAS':'INTENTA RECORDAR ANTES DE REVELAR'}</span><div class="flash-front ${study.direction==='hanzi'?'hanzi':''}">${study.direction==='pinyin'?c.pinyin:c.hanzi}</div>${study.direction==='pinyin'?`<p class="flash-meaning">${escape(c.meaning)}</p>`:''}${study.flipped?`<div class="flash-answer"><div class="hanzi" lang="zh-Hans">${c.hanzi}</div><div class="pinyin">${c.pinyin}</div><p>${escape(c.meaning)}</p></div><p class="source-note">${c.classSource||c.source}</p><h3>¿Cuánto te ha costado?</h3><div class="rating-grid">${[['again','Otra vez'],['hard','Difícil'],['good','Bien'],['easy','Fácil']].map(([rating,label])=>`<button data-card-rating="${rating}" class="rating ${rating}"><strong>${label}</strong><small>${delayLabel(rateCard(record,rating))}</small></button>`).join('')}</div><p class="input-help">Tu valoración decide cuándo vuelve. «Otra vez» también la repite en esta tanda.</p>`:`<p class="muted">${study.direction==='pinyin'?'¿Cómo se escribe? Intenta visualizar sus caracteres.':'¿Cómo se pronuncia? ¿Qué significa?'}</p><button class="button primary" id="card-reveal">Mostrar respuesta ${icon('arrow')}</button><p class="source-note spaced">Sin teclado chino. Puedes decirlo en voz alta o intentarlo en papel.</p>`}</section></div>`;
+  const c=study.queue[study.index],record=fs().records[c.id+'::'+study.direction],total=cardsForScope(scope,fs().enabledHSK).length;
+  return `<div class="session-shell"><div class="session-header"><span>TARJETAS · ${study.direction==='pinyin'?'Pinyin → caracteres':'Caracteres → pinyin'}</span><button class="text-link" id="card-decks">Mis mazos ${icon('close')}</button></div><p class="source-note">Esta tanda: ${study.queue.length} tarjetas · ${total} en el mazo. Hasta ${fs().newLimit} nuevas por tanda; las demás quedan para las siguientes.</p><div class="progress-bar"><span style="width:${study.index/study.queue.length*100}%"></span></div><section class="card flash-card"><div class="question-meta">${tag(c.decks.includes('class')?'DE TU CLASE':'HSK '+c.level+' · 2026')}<small>${record?'Repaso':'Nueva'} · ${study.index+1} de ${study.queue.length}</small></div><span class="eyebrow">${study.flipped?'COMPRUEBA LO QUE RECORDABAS':'INTENTA RECORDAR ANTES DE REVELAR'}</span><div class="flash-front ${study.direction==='hanzi'?'hanzi':''}">${study.direction==='pinyin'?c.pinyin:c.hanzi}</div>${study.direction==='pinyin'?`<p class="flash-meaning">${escape(c.meaning)}</p>`:''}${study.flipped?`<div class="flash-answer"><div class="hanzi" lang="zh-Hans">${c.hanzi}</div><div class="pinyin">${c.pinyin}</div><p>${escape(c.meaning)}</p></div><p class="source-note">${c.classSource||c.source}</p><h3>¿Cuánto te ha costado?</h3><div class="rating-grid">${[['again','Otra vez'],['hard','Difícil'],['good','Bien'],['easy','Fácil']].map(([rating,label])=>`<button data-card-rating="${rating}" class="rating ${rating}"><strong>${label}</strong><small>${delayLabel(rateCard(record,rating))}</small></button>`).join('')}</div><p class="input-help">Tu valoración decide cuándo vuelve. «Otra vez» también la repite en esta tanda.</p>`:`<p class="muted">${study.direction==='pinyin'?'¿Cómo se escribe? Intenta visualizar sus caracteres.':'¿Cómo se pronuncia? ¿Qué significa?'}</p><button class="button primary" id="card-reveal">Mostrar respuesta ${icon('arrow')}</button><p class="source-note spaced">Sin teclado chino. Puedes decirlo en voz alta o intentarlo en papel.</p>`}</section></div>`;
  }
  function imeHTML(){candidates=imeCandidates(imeText);return candidates.length?candidates.map((c,i)=>`<button class="ime-candidate ${i===highlight?'chosen':''}" data-ime-index="${i}"><span class="hanzi" lang="zh-Hans">${c.hanzi}</span><small>${c.pinyin}</small></button>`).join(''):'<p class="input-help">'+(imeText?'No hay sugerencias para ese pinyin en este vocabulario. Prueba por palabras o sílabas.':'Escribe ni, shi, renshi o una frase conocida como nihaoma.')+'</p>';}
  function refreshIME(){$('#ime-candidates').innerHTML=imeHTML();}
