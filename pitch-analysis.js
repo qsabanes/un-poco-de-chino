@@ -23,13 +23,19 @@ export function analyzePitch(input,sampleRate){
  if(!Number.isFinite(sampleRate)||sampleRate<8000||sampleRate>192000||!input?.length||input.length/sampleRate>8)return {ok:false,reason:'format',points:[]};
  const samples=downsample(input,sampleRate),rate=16000,size=512,hop=160,frames=[];
  let clipped=0;for(const x of samples)if(!Number.isFinite(x))return {ok:false,reason:'format',points:[]};else if(Math.abs(x)>.995)clipped++;
+ // Keep the raw signal for level/clipping checks. For periodicity, suppress DC
+ // and upper harmonics that obscure the rapidly changing fundamental of tone 4.
+ const filtered=new Float32Array(samples.length),lp=1-Math.exp(-2*Math.PI*800/rate),hp=1-Math.exp(-2*Math.PI*50/rate);
+ let dc=0,low=0,low2=0;
+ for(let i=0;i<samples.length;i++){dc+=hp*(samples[i]-dc);low+=lp*(samples[i]-dc-low);low2+=lp*(low-low2);filtered[i]=low2;}
  for(let offset=0;offset+size<=samples.length;offset+=hop){const frame=samples.subarray(offset,offset+size);let power=0;for(const x of frame)power+=x*x;frames.push({t:(offset+size/2)/rate,rms:Math.sqrt(power/size),hz:null,confidence:0,offset});}
- const peak=quantile(frames.map(f=>f.rms),.95),threshold=Math.max(.004,peak*.14);
- for(const f of frames)if(f.rms>=threshold){const pitch=pitchFrame(samples.subarray(f.offset,f.offset+size));if(pitch)Object.assign(f,pitch);}
+ // A short syllable may occupy less than 5% of the three-second recording.
+ const peak=frames.reduce((max,f)=>Math.max(max,f.rms),0),threshold=Math.max(.004,peak*.10);
+ for(const f of frames)if(f.rms>=threshold){const pitch=pitchFrame(filtered.subarray(f.offset,f.offset+size));if(pitch)Object.assign(f,pitch);}
  const voiced=frames.filter(f=>f.hz),groups=[];
  for(const f of voiced){let group=groups.at(-1);if(!group||f.t-group.at(-1).t>.16){group=[];groups.push(group);}group.push(f);}
  groups.sort((a,b)=>b.length-a.length);const main=groups[0]||[];
- if(main.length<14)return {ok:false,reason:peak<.006?'quiet':'unvoiced',points:[],voicedSeconds:main.length*.01};
+ if(main.length<10)return {ok:false,reason:peak<.006?'quiet':main.length?'brief':'unvoiced',points:[],voicedSeconds:main.length*.01};
  const first=main[0].t,last=main.at(-1).t,duration=last-first;
  const active=frames.filter(f=>f.rms>=threshold),coverage=main.length/Math.max(1,active.length);
  let jumps=0;
@@ -40,12 +46,12 @@ export function analyzePitch(input,sampleRate){
  let reason=null;
  if(clipped/samples.length>.015)reason='clipping';
  else if(groups[1]?.length>16&&groups[1].length/main.length>.4)reason='multiple';
- else if(duration<.14||duration>2.2)reason='duration';
+ else if(duration<.09||duration>2.2)reason='duration';
  else if(coverage<.55||confidence<.81||jumps/Math.max(1,main.length-1)>.09||span>16)reason='unstable';
  return {ok:!reason,reason,points,duration,voicedSeconds:main.length*.01,coverage,confidence,span};
 }
 export function contourShape(points){
- if(points.length<12)return {tone:null,kind:'unclear'};
+ if(points.length<10)return {tone:null,kind:'unclear'};
  const bins=Array.from({length:20},(_,i)=>{const near=points.filter(p=>Math.abs(p.x-(i+.5)/20)<.065);return near.length?mean(near.map(p=>p.y)):null;});
  const available=bins.map((y,i)=>({x:(i+.5)/20,y})).filter(p=>p.y!==null);
  if(available.length<15)return {tone:null,kind:'unclear'};

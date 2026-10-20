@@ -30,4 +30,17 @@ assert.equal(analyzePitch(new Float32Array([NaN]),16000).reason,'format');
 assert.ok(contourChart(fa,a).includes('tone-chart-learner'));assert.ok(toneFeedback({status:'uncertain'},3).includes('tercer tono'));
 
 assert.equal(assessTone(analyzePitch(fixture(1,180,.2).samples,16000),1).status,'uncertain');
+// A falling syllable is often brief and surrounded by most of the capture's silence.
+for(const base of [90,180,300])for(const duration of [.14,.18,.23]){
+ const short=fixture(4,base,duration),capture=new Float32Array(48000);capture.set(short.samples,16000);
+ const result=assessTone(analyzePitch(capture,16000),4);
+ assert.equal(result.status,'compatible',JSON.stringify({base,duration,result}));
+}
+// Harmonics must not hide the falling fundamental; nor should filtered noise count as voice.
+const rich=fixture(4,260,.18);let phase=0;
+for(let i=4000;i<4000+.18*16000;i++){const x=(i-4000)/(.18*16000);phase+=2*Math.PI*260*2**((4-9*x)/12)/16000;rich.samples[i]+=Math.min(1,x*30,(1-x)*30)*.15*Math.sin(5*phase);}
+assert.equal(assessTone(analyzePitch(rich.samples,16000),4).status,'compatible');
+assert.equal(assessTone(analyzePitch(fixture(4,180,.06).samples,16000),4).status,'insufficient');
+assert.ok(toneFeedback({status:'insufficient',reason:'brief'},4).includes('Se ha detectado voz'));
+assert.ok(!toneFeedback({status:'uncertain'},4).includes('sostener'));
 console.log('PASS: contour extraction across voice ranges, quality gates, third-tone ambiguity, brief contours and plotting.');
