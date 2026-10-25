@@ -9,6 +9,12 @@ const wordKey=(h,p)=>h+'|'+plainPinyin(p);
 export const cardLibrary=hskVocabulary.map(v=>({...v,decks:['hsk'+v.level],source:'HSK 2026 · nivel '+v.level}));
 const byWord=new Map();
 for(const c of cardLibrary)if(!byWord.has(wordKey(c.hanzi,c.pinyin)))byWord.set(wordKey(c.hanzi,c.pinyin),c);
+// Reserve existing optional-book IDs before promoting a word into a class deck.
+for(const word of bookVocabulary){
+ let c=byWord.get(wordKey(word.hanzi,word.pinyin));
+ if(!c){c={...word,id:'book-'+word.id,decks:[]};cardLibrary.push(c);byWord.set(wordKey(c.hanzi,c.pinyin),c);}
+ const scope='book-s'+word.session;c.decks.push(scope);c.bookEntries={...c.bookEntries,[scope]:word};
+}
 const classWords=vocabulary.filter(v=>!v.extra);
 classWords.forEach((v,index)=>{
  let c=byWord.get(wordKey(v.hanzi,v.pinyin));
@@ -19,11 +25,6 @@ for(const example of s1Examples){
  let c=byWord.get(wordKey(example.hanzi,example.pinyin));
  if(!c){c={...example,id:'class-'+example.id,decks:[]};cardLibrary.push(c);byWord.set(wordKey(c.hanzi,c.pinyin),c);}
  c.exampleSource=example.source;c.decks.push('s1-examples');
-}
-for(const word of bookVocabulary){
- let c=byWord.get(wordKey(word.hanzi,word.pinyin));
- if(!c){c={...word,id:'book-'+word.id,decks:[]};cardLibrary.push(c);byWord.set(wordKey(c.hanzi,c.pinyin),c);}
- const scope='book-s'+word.session;c.decks.push(scope);c.bookEntries={...c.bookEntries,[scope]:word};
 }
 export const cardIds=new Set(cardLibrary.map(c=>c.id));
 export const flashDefaults=()=>({records:{},enabledHSK:[],direction:'hanzi',directionVersion:2,newLimit:10});

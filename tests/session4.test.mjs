@@ -22,6 +22,8 @@ for(const mode of ['daily','recognition','recognition-phrases']){
 }
 // A word first introduced in an optional book deck now belongs to class S4;
 // preserve its shared ID and accept existing review records.
+const niNe=cardLibrary.find(c=>c.hanzi==='你呢');assert.equal(niNe.id,'book-ni-ne');
+const previousBookReview={...flashDefaults(),records:{'book-ni-ne::hanzi':rateCard(null,'good',1000)}};assert.deepEqual(validateFlashState(previousBookReview),previousBookReview);
 const ne=cardLibrary.find(c=>c.hanzi==='呢');assert.ok(ne.decks.includes('s4'));assert.ok(ne.decks.includes('book-s2'));assert.ok(!ne.decks.includes('s2'));
 const saved={...flashDefaults(),records:{[ne.id+'::hanzi']:rateCard(null,'good',1000)}};assert.deepEqual(validateFlashState(saved),saved);
 assert.ok(bookSupport[4]);assert.equal(bookVocabulary.filter(v=>v.session===4).length,4);assert.equal(cardsForScope('book-s4').length,4);

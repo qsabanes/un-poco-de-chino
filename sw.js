@@ -1,4 +1,4 @@
-const CACHE='entre-trazos-v15';
+const CACHE='entre-trazos-v16';
 const FILES=['./','./index.html','./styles.css','./app.js','./data.js','./session4.js','./classes.js','./pronunciation.js','./twisters.js','./confusions.js','./tone-trainer.js','./pitch-analysis.js','./pitch-worker.js','./pronunciation-data.js','./pronunciation-sources.txt','./cards.js','./book-support.js','./hsk-data.js','./hsk-sources.txt','./icon.svg','./manifest.webmanifest'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('entre-trazos-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
