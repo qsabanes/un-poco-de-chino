@@ -2,14 +2,14 @@ import assert from 'node:assert/strict';
 import {bookSupport,bookVocabulary,bookSupportHTML,bookEdition} from '../book-support.js';
 import {classes} from '../classes.js';
 import {cardsForScope,createStudyTools,flashDefaults,rateCard,validateFlashState} from '../cards.js';
-assert.deepEqual(classes.map(c=>c.id),[1,2,3]);
+assert.deepEqual(classes.map(c=>c.id),[1,2,3,4]);
 assert.deepEqual([1,2,3].map(n=>cardsForScope('s'+n).length),[15,41,31]);
-assert.equal(cardsForScope('class').length,73);
+assert.equal(cardsForScope('class').length,101);
 assert.equal(bookEdition.contentPdfOffset,11);
-for(const session of [1,2,3]){
+for(const session of [1,2,3,4]){
  assert.ok(bookSupport[session]);const deck=cardsForScope('book-s'+session);assert.equal(deck.length,4);
  for(const word of bookVocabulary.filter(v=>v.session===session)){
-  assert.ok(deck.some(c=>c.hanzi===word.hanzi));assert.ok(!cardsForScope('class').some(c=>c.hanzi===word.hanzi));
+  assert.ok(deck.some(c=>c.hanzi===word.hanzi));assert.ok(!cardsForScope('s'+session).some(c=>c.hanzi===word.hanzi));
   assert.ok(word.source.includes('PDF '+(word.page+11)));
  }
  const html=bookSupportHTML(session,false);assert.ok(html.includes('La sesión marca el orden.'));assert.ok(html.includes('data-card-start="book-s'+session+'"'));

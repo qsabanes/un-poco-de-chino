@@ -19,11 +19,19 @@ export const bookSupport={
   ['Dos tipos de pregunta','吗 convierte una afirmación en pregunta de sí/no. 哪 pregunta qué país: 你是哪国人？ No añadas 吗 cuando ya usas 哪 para pedir esa información.'],
   ['Negar con 不','Coloca 不 antes de 是 o 叫. Su forma de diccionario es bù; delante de cuarto tono se pronuncia bú. Compara bù hǎo con bú shì.'],
   ['Los añadidos de clase siguen en S3','Cataluña y Perú se conservan porque aparecen en tus diapositivas. El listado de países del libro sirve para contrastar y ampliar, sin sustituir el de clase.']
- ],checks:[['Una persona dice 她是意大利人. ¿Cómo preguntas si esa afirmación es cierta?','她是意大利人吗？ Tā shì Yìdàlìrén ma? «¿Es italiana?»'],['¿Qué cambia entre 英国 y 英国人?','英国 Yīngguó es Reino Unido; 英国人 Yīngguórén es británico o británica.'],['¿Cómo se lee 不 en 不是?','Bú shì: 不 cambia a segundo tono delante del cuarto tono de 是.']]}
+ ],checks:[['Una persona dice 她是意大利人. ¿Cómo preguntas si esa afirmación es cierta?','她是意大利人吗？ Tā shì Yìdàlìrén ma? «¿Es italiana?»'],['¿Qué cambia entre 英国 y 英国人?','英国 Yīngguó es Reino Unido; 英国人 Yīngguórén es británico o británica.'],['¿Cómo se lee 不 en 不是?','Bú shì: 不 cambia a segundo tono delante del cuarto tono de 是.']]},
+ 4:{pages:'29–33 y 36',focus:'Origen, identidad y preguntas de ida y vuelta',links:[['Dónde y quién','29–30'],['Responder y construir preguntas','31–33'],['Vocabulario de apoyo','36']],notes:[
+  ['De país a ciudad','S4 amplía la pregunta de origen con 哪里. Una respuesta puede señalar una ciudad: 我是北京人. Para pedir la nacionalidad de forma específica, conserva 哪国人.'],
+  ['Una pregunta que depende del contexto','En 你呢？, no hay una traducción completa sin conocer lo anterior. Puede preguntar por un nombre, un apellido o un lugar de origen. Relee el turno anterior antes de responder.'],
+  ['Preguntar por la persona','谁 sustituye al nombre o identidad que falta. En 他是谁？ va después de 是; en 谁姓王？ es el sujeto. El orden depende de su función, no de una regla que lo ponga siempre al principio.'],
+  ['Una herramienta para cada intención','Usa 吗 para confirmar, 谁 para saber quién, 什么 para pedir un nombre u otro dato y 哪里 para un lugar. 呢 retoma la pregunta anterior. El libro apoya estos contrastes sin cambiar el orden de S4.']
+ ],checks:[['Te dicen 我是香港人，你呢？. ¿Preguntan tu nombre o tu origen?','Tu origen. Puedes responder 我是巴黎人, por ejemplo. 呢 recupera lo que se venía preguntando.'],['¿Necesita 吗 la pregunta 他是谁？','No. 谁 ya pide la identidad de la persona.'],['¿Cuál es más específica para la nacionalidad: 哪国人 o 哪里人?','哪国人. 哪里人 permite responder con un país, una región o una ciudad según el contexto.']]}
+
 };
 const words={
  1:[['shengmu','声母','shēngmǔ','inicial consonántica',9],['yunmu','韵母','yùnmǔ','final de sílaba',5],['shengdiao','声调','shēngdiào','tono',5],['qingsheng','轻声','qīngshēng','tono neutro',7]],
  2:[['ne','呢','ne','partícula para devolver una pregunta según el contexto',29],['ni-ne','你呢','Nǐ ne','¿y tú?',29],['xiexie','谢谢','xièxie','gracias',36],['bu-keqi','不客气','bú kèqi','de nada',36]],
+ 4:[['danshi','但是','dànshì','pero',36],['a-interjection','啊','à','interjección de sorpresa en este diálogo',30],['buhaoyisi','不好意思','bù hǎoyìsi','disculpa / perdón',36],['mei-guanxi','没关系','méi guānxi','no pasa nada',31]],
  3:[['guojia','国家','guójiā','país',26],['duibuqi','对不起','duìbuqǐ','lo siento / perdón',36],['mei-guanxi','没关系','méi guānxi','no pasa nada',36],['buhaoyisi','不好意思','bù hǎoyìsi','disculpa / perdón',36]]
 };
 export const bookVocabulary=Object.entries(words).flatMap(([session,list])=>list.map(([id,hanzi,pinyin,meaning,page])=>({id,hanzi,pinyin,meaning,session:Number(session),page,source:`Camino al chino I · 2.ª ed. · p. ${page} (PDF ${page+bookEdition.contentPdfOffset}) · complemento de S${session}`})));

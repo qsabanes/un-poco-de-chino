@@ -1,3 +1,4 @@
+import {session4Priority} from './session4.js';
 import {vocabulary,grammar,sessionsForSource} from './data.js';
 import {dialogues,s1Examples} from './classes.js';
 import {hskVocabulary} from './hsk-data.js';
@@ -50,13 +51,14 @@ export function rateCard(previous,rating,now=Date.now()){
 }
 export function delayLabel(record,now=Date.now()){const delay=record.due-now;return delay<120000?'1 min':delay<DAY?'10 min':Math.round(delay/DAY)+' d';}
 function sessionPage(card,scope){
- const label=/^s[123]$/.test(scope)?scope.toUpperCase():null;
+ const label=/^s[1-9]\d*$/.test(scope)?scope.toUpperCase():null;
  if(!label)return 10000;
  const source=card.classSource||card.source;
  const part=source.split(';').find(s=>s.includes(label)||(scope==='s1'&&s.includes('U1')));
  return Number(part?.match(/pp?\.\s*(\d+)/)?.[1]||10000);
 }
 function sessionTopic(card,scope){
+ if(scope==='s4')return session4Priority(card);
  if(scope!=='s3')return 0;
  if(card.classCategory!=='países')return 3;
  return card.hanzi.length===1?2:card.hanzi.endsWith('人')?1:0;
@@ -88,7 +90,7 @@ export function createStudyTools({getState,save,render,toast,icon,escape}){
  const tag=text=>`<span class="tag">${escape(text)}</span>`;
  let study=null,scope='active',browse='',imeText='',candidates=[],highlight=0;
  const fs=()=>getState().flashcards;
- const decks=[['class','Mi clase','Todo el vocabulario de las sesiones. Se amplía al añadir nuevas palabras.'],['s1','Sesión 1','Primeras palabras, términos de introducción y saludos del complemento U1.'],['s1-examples','S1 · Ejemplos de caracteres','Opcional: caracteres utilizados para explicar la escritura y los tonos. No se añaden al repaso diario.'],['s2','Sesión 2','Presentaciones y qué tal estás.'],['s3','Sesión 3','Países, preguntas y negación.'],...[1,2,3].map(n=>['book-s'+n,'Libro · apoyo de S'+n,'Opcional: palabras para ampliar esta sesión. Se practica por separado.']),['hsk1','HSK 1 · 2026','300 entradas nuevas.'],['hsk2','HSK 2 · 2026','200 entradas nuevas; 500 acumuladas con HSK 1.'],['hsk3','HSK 3 · 2026','500 entradas nuevas; 1.000 acumuladas con HSK 1 y 2.']];
+ const decks=[['class','Mi clase','Todo el vocabulario de las sesiones. Se amplía al añadir nuevas palabras.'],['s1','Sesión 1','Primeras palabras, términos de introducción y saludos del complemento U1.'],['s1-examples','S1 · Ejemplos de caracteres','Opcional: caracteres utilizados para explicar la escritura y los tonos. No se añaden al repaso diario.'],['s2','Sesión 2','Presentaciones y qué tal estás.'],['s3','Sesión 3','Países, preguntas y negación.'],['s4','Sesión 4','Ciudades, origen y preguntas con 哪里, 呢 y 谁.'],...[1,2,3,4].map(n=>['book-s'+n,'Libro · apoyo de S'+n,'Opcional: palabras para ampliar esta sesión. Se practica por separado.']),['hsk1','HSK 1 · 2026','300 entradas nuevas.'],['hsk2','HSK 2 · 2026','200 entradas nuevas; 500 acumuladas con HSK 1.'],['hsk3','HSK 3 · 2026','500 entradas nuevas; 1.000 acumuladas con HSK 1 y 2.']];
  function counts(cards){const records=fs().records,dir=fs().direction;return {due:cards.filter(c=>records[c.id+'::'+dir]?.due<=Date.now()).length,new:cards.filter(c=>!records[c.id+'::'+dir]).length,seen:cards.filter(c=>records[c.id+'::'+dir]).length};}
  function start(chosenScope=scope,free=false){scope=chosenScope;const cards=cardsForScope(scope,fs().enabledHSK);const queue=free?[...cards].sort(()=>Math.random()-.5).slice(0,10):reviewQueue(cards,fs().records,fs().direction,fs().newLimit);study={queue,index:0,flipped:false,reviewed:0,direction:fs().direction,free};render();}
  function viewCard(c){const entry=c.bookEntries?.[scope];return entry?{...c,meaning:entry.meaning,source:entry.source}:c;}

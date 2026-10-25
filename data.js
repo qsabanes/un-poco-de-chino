@@ -1,4 +1,5 @@
-// Contenido adaptado de U2.1 (S2) y U2.2 (S3). Los ejercicios son originales.
+import {session4Vocabulary,session4Shared,session4Grammar,session4Questions,session4Priority} from './session4.js';
+// Contenido organizado por S1–S4, con referencias a los materiales de cada sesión. Los ejercicios son originales.
 export const vocabulary = [
   ['wo','我','wǒ','yo','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
   ['ni','你','nǐ','tú','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
@@ -78,6 +79,9 @@ export const vocabulary = [
   ['pengyou','朋友','péngyou','amigo / amiga','personas','Ampliación propuesta',true],
 ].map(([id,hanzi,pinyin,meaning,category,source,extra=false])=>({id,hanzi,pinyin,meaning,category,source,extra}));
 
+for(const v of vocabulary){if(v.id==='beijing')v.category='ciudades';if(session4Shared[v.id])v.source+='; S4 · '+session4Shared[v.id];}
+vocabulary.push(...session4Vocabulary);
+
 export const grammar = [
  {id:'how-are-you',title:'Preguntar qué tal estás',tag:'怎么样',body:'En este saludo, 怎么样 pregunta «qué tal». Cambia el pronombre según a quién te diriges: 你, 您 o 你们.',pattern:'Persona + 怎么样？',examples:[['你怎么样？','Nǐ zěnmeyàng?','¿Qué tal estás?'],['你们怎么样？','Nǐmen zěnmeyàng?','¿Qué tal estáis?'],['很好。','Hěn hǎo.','Muy bien.'],['不错。','Bú cuò.','Bastante bien / no está mal.'],['还可以。','Hái kěyǐ.','Aceptable / voy tirando.'],['不太好。','Bú tài hǎo.','No muy bien.']],note:'En estas respuestas no necesitas 是. 不 se pronuncia bú delante de cuò o tài, que llevan cuarto tono. 很好 y 还可以 se muestran con sus tonos de diccionario; al hablar, los terceros tonos consecutivos cambian.',source:'S2 · pp. 36–43. Resumen de las expresiones y la práctica de clase.'},
  {id:'names',title:'Un nombre, dos preguntas',tag:'叫 · 姓',body:'叫 presenta tu nombre. 姓 introduce tu apellido. El apellido suele ir antes del nombre en los nombres chinos.',pattern:'Sujeto + 叫 + nombre / Sujeto + 姓 + apellido',examples:[['你叫什么名字？','Nǐ jiào shénme míngzi?','¿Cómo te llamas?'],['我叫安娜。','Wǒ jiào Ānnà.','Me llamo Anna.'],['你姓什么？','Nǐ xìng shénme?','¿Cuál es tu apellido?']],note:'Las preguntas con 什么 conservan la posición de la información que falta. No añadas 吗.',source:'S2 · pp. 8, 16–17, 27–28. Ejemplo de Anna creado para practicar.'},
@@ -86,6 +90,12 @@ export const grammar = [
  {id:'negative',title:'Una pequeña palabra que cambia de tono',tag:'不 → bú / bù',body:'Coloca 不 antes del verbo para negar. Se escribe siempre 不; delante de una sílaba de cuarto tono se pronuncia bú (segundo tono).',pattern:'Sujeto + 不 + verbo + complemento',examples:[['我不是中国人。','Wǒ bú shì Zhōngguórén.','No soy chino / china.'],['我不叫安娜。','Wǒ bú jiào Ānnà.','No me llamo Anna.'],['不好','bù hǎo','no está bien']],note:'En el vocabulario verás bù, su forma de diccionario. En los ejemplos mostramos el tono que se pronuncia. 你好 también cambia al hablar: el primer tercer tono se realiza como segundo; su pinyin suele escribirse nǐ hǎo.',source:'S3 · pp. 39–41; pinyin y tonos de S1. Ejemplos adaptados.'},
  {id:'plural',title:'Hablar de más de una persona',tag:'们 · 也',body:'们 forma el plural de los pronombres personales. 也 significa «también» y se coloca antes del verbo.',pattern:'Pronombre + 们 / Sujeto + 也 + verbo',examples:[['我们是西班牙人。','Wǒmen shì Xībānyárén.','Somos españoles / españolas.'],['我也是中国人。','Wǒ yě shì Zhōngguórén.','Yo también soy chino / china.'],['认识你，我也很高兴。','Rènshi nǐ, wǒ yě hěn gāoxìng.','Yo también me alegro de conocerte.']],note:'他 y 她 se pronuncian igual (tā), pero se escriben de forma distinta.',source:'S2 · p. 11; S3 · pp. 22, 24–25. Primer ejemplo creado para practicar.'},
 ];
+
+grammar.push(...session4Grammar);
+export function grammarForSession(session){
+ const ids={2:['names','how-are-you'],3:['nationality','questions','negative','plural'],4:['where-from','return-question','who','choose-question']};
+ return grammar.filter(g=>(ids[session]||[]).includes(g.id));
+}
 
 export const questions = [
  {id:'q1',type:'choice',skill:'Vocabulario',prompt:'¿Qué significa 姓?',hanzi:'姓',options:['Llamarse','Apellidarse','Conocer','Ser'],answer:'Apellidarse',explanation:'姓 (xìng) se utiliza para el apellido. 叫 (jiào) se utiliza para el nombre.',source:'S2 · pp. 16–17'},
@@ -117,11 +127,18 @@ export const questions = [
  {id:'x2',type:'pinyin',skill:'Ampliación',prompt:'Escribe el pinyin de «amigo / amiga».',hanzi:'朋友',answer:'péngyou',explanation:'朋友 es péngyou: segundo tono y tono neutro. Puedes escribir peng2you5.',source:'Ampliación · práctica creada',extra:true},
 ];
 
+questions.push(...session4Questions);
+
 export function sessionsForSource(source){
- const ids=[...String(source).matchAll(/S([123])/g)].map(m=>+m[1]);
+ const ids=[...String(source).matchAll(/\bS([1-9]\d*)\b/g)].map(m=>+m[1]);
  if(String(source).includes('U1'))ids.push(1);
  return [...new Set(ids)];
 }
+export function vocabularyForSession(session){
+ const list=vocabulary.filter(v=>v.extra||sessionsForSource(v.source).includes(Number(session)));
+ return Number(session)===4?list.sort((a,b)=>session4Priority(a)-session4Priority(b)):list;
+}
+
 // Recognition links a known sound to its written form; no Chinese keyboard is required.
 const coreWords=vocabulary.filter(v=>!v.extra);
 for(const [index,v] of coreWords.entries()){
@@ -158,7 +175,7 @@ export function normalizePinyin(value) {
 export function normalizeHanzi(value) { return String(value).normalize('NFKC').replace(/[\s。！？?!，,.、]/g,''); }
 export function isCorrect(question,value) {return question.type==='pinyin' ? normalizePinyin(value)===normalizePinyin(question.answer) : question.type==='text'||question.type==='order' ? normalizeHanzi(value)===normalizeHanzi(question.answer) : value===question.answer;}
 export function makeSession(records,extra=false,mode='daily',random=Math.random,now=Date.now(),filters={}) {
-  const pool=questions.filter(q=>!q.introOnly&&(extra||!q.extra)&&(!filters.session||q.extra||q.sessionIds.includes(Number(filters.session)))&&(!mode.startsWith('recognition')||q.kind==='recognition')&&(mode!=='recognition-phrases'||['rec-renshi-phrase','rec-renshi-build','rec-names-phrase','rec-country-phrase','rec-zenmeyang-phrase'].includes(q.id))&&(mode!=='foundation'||q.kind==='foundation'));
+  const pool=questions.filter(q=>!q.introOnly&&(extra||!q.extra)&&(!filters.session||q.extra||q.sessionIds.includes(Number(filters.session)))&&(!mode.startsWith('recognition')||q.kind==='recognition')&&(mode!=='recognition-phrases'||q.phrase||['rec-renshi-phrase','rec-renshi-build','rec-names-phrase','rec-country-phrase','rec-zenmeyang-phrase'].includes(q.id))&&(mode!=='foundation'||q.kind==='foundation'));
   const selected=mode==='errors' ? pool.filter(q=>(records[q.id]?.errors||0)>0 && !(records[q.id]?.resolved)) : pool;
   return selected.map(q=>({q,rank:random()+(!records[q.id]?3:records[q.id].due<=now?records[q.id].resolved?2:0:5)})).sort((a,b)=>a.rank-b.rank).slice(0,8).map(x=>x.q);
 }
