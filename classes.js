@@ -1,10 +1,11 @@
+import {session5Class,session5Dialogue} from './session5.js';
 import {session4Class,session4Dialogue} from './session4.js';
 export const classes=[
  {id:1,title:'Los primeros sonidos y trazos',subtitle:'Pinyin, tonos y cómo funciona la escritura china.',sources:['1. S1_pinyin.pdf','2. S1_El idioma chino.pdf'],topics:['Iniciales y finales','Cuatro tonos','Caracteres y trazos'],book:'Introducción al idioma y al pinyin'},
  {id:2,title:'Hola. Me llamo…',subtitle:'Saludar, preguntar qué tal estás y presentarte.',sources:['U2.1 (S2).pdf'],topics:['Qué tal y cortesía','Nombres y apellidos','Pronombres'],book:'Camino al chino I · material de U2'},
  {id:3,title:'¿De qué nacionalidad eres?',subtitle:'Países, nacionalidades y primeras preguntas de sí o no.',sources:['U2.2 (S3).pdf'],topics:['Países y nacionalidades','Preguntas con 吗','Negación y tono de 不'],book:'Camino al chino I · material de U2'},
 ];
-classes.push(session4Class);
+classes.push(session4Class,session5Class);
 export const initialGroups=[['b · p · m · f','Labios'],['d · t · n · l','Zona de los dientes y encías'],['g · k · h','Zona posterior de la boca'],['j · q · x','Grupo que se practica con i y ü'],['zh · ch · sh · r','Grupo retroflejo'],['z · c · s','Grupo dental']];
 export const finalGroups=[['a · o · e · i · u · ü','Vocales básicas'],['ai · ei · ao · ou','Combinaciones vocálicas'],['er','Final propia de sílabas como èr'],['an · en · in · un · ün','Finales terminadas en -n'],['ang · eng · ing · ong','Finales terminadas en -ng'],['ia · ie · iao · iou (iu) · ian · iang · iong','Combinaciones con i'],['ua · uo · uai · uei (ui) · uan · uen (un) · uang · ueng','Combinaciones con u'],['üe · üan · ün','Combinaciones con ü']];
 export const tones=[['mā','1','alto y sostenido'],['má','2','ascendente'],['mǎ','3','bajo; en aislamiento baja y sube'],['mà','4','descendente'],['ma','neutro','breve y sin marca de tono']];
@@ -21,6 +22,7 @@ export const dialogues={
 };
 
 dialogues[4]=session4Dialogue;
+dialogues[5]=session5Dialogue;
 
 // Illustrative characters from S1, studied separately from the main vocabulary.
 export const s1Examples=[['日', 'rì', 'sol / día', 42], ['女', 'nǚ', 'mujer', 42], ['山', 'shān', 'montaña', 42], ['水', 'shuǐ', 'agua', 43], ['火', 'huǒ', 'fuego', 43], ['土', 'tǔ', 'tierra', 43], ['田', 'tián', 'campo', 43], ['牛', 'niú', 'vaca / buey', 43], ['大', 'dà', 'grande', 43], ['车', 'chē', 'vehículo', 43], ['人', 'rén', 'persona', 44], ['月', 'yuè', 'luna / mes', 44], ['口', 'kǒu', 'boca', 44], ['木', 'mù', 'árbol / madera', 44], ['上', 'shàng', 'arriba', 45], ['本', 'běn', 'raíz / origen', 45], ['刃', 'rèn', 'filo', 45], ['下', 'xià', 'abajo', 47], ['林', 'lín', 'bosquecillo', 48], ['休', 'xiū', 'descansar', 48], ['信', 'xìn', 'carta / confianza', 48], ['灭', 'miè', 'apagar / extinguir', 51], ['从', 'cóng', 'seguir / desde', 52], ['众', 'zhòng', 'multitud', 52], ['妈', 'mā', 'mamá (carácter de 妈妈)', 53], ['湖', 'hú', 'lago', 53], ['期', 'qī', 'período', 53], ['马', 'mǎ', 'caballo', 54], ['永', 'yǒng', 'eterno', 57], ['汤', 'tāng', 'sopa', 72], ['糖', 'táng', 'azúcar', 72], ['躺', 'tǎng', 'tumbarse', 72], ['烫', 'tàng', 'estar muy caliente / quemar', 72], ['鸭', 'yā', 'pato', 77], ['牙', 'yá', 'diente', 77], ['麻', 'má', 'cáñamo / entumecido', 78], ['骂', 'mà', 'regañar / insultar', 78]].map(([hanzi,pinyin,meaning,page],i)=>({id:"s1-example-"+i,hanzi,pinyin,meaning,source:"S1 · El idioma chino, p. "+page+" · ejemplo ilustrativo"}));

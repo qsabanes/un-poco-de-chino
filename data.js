@@ -1,5 +1,6 @@
+import {session5Vocabulary,session5Shared,session5Grammar,session5Questions,session5Priority} from './session5.js';
 import {session4Vocabulary,session4Shared,session4Grammar,session4Questions,session4Priority} from './session4.js';
-// Contenido organizado por S1–S4, con referencias a los materiales de cada sesión. Los ejercicios son originales.
+// Contenido organizado por S1–S5, con referencias a los materiales de cada sesión. Los ejercicios son originales.
 export const vocabulary = [
   ['wo','我','wǒ','yo','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
   ['ni','你','nǐ','tú','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
@@ -81,6 +82,8 @@ export const vocabulary = [
 
 for(const v of vocabulary){if(v.id==='beijing')v.category='ciudades';if(session4Shared[v.id])v.source+='; S4 · '+session4Shared[v.id];}
 vocabulary.push(...session4Vocabulary);
+for(const v of vocabulary){if(session5Shared[v.id])v.source+='; S5 · '+session5Shared[v.id];if(['xiexie','bu-keqi'].includes(v.id)){v.extra=false;v.source='S5 · pp. 2–3, 6';}}
+vocabulary.push(...session5Vocabulary);
 
 export const grammar = [
  {id:'how-are-you',title:'Preguntar qué tal estás',tag:'怎么样',body:'En este saludo, 怎么样 pregunta «qué tal». Cambia el pronombre según a quién te diriges: 你, 您 o 你们.',pattern:'Persona + 怎么样？',examples:[['你怎么样？','Nǐ zěnmeyàng?','¿Qué tal estás?'],['你们怎么样？','Nǐmen zěnmeyàng?','¿Qué tal estáis?'],['很好。','Hěn hǎo.','Muy bien.'],['不错。','Bú cuò.','Bastante bien / no está mal.'],['还可以。','Hái kěyǐ.','Aceptable / voy tirando.'],['不太好。','Bú tài hǎo.','No muy bien.']],note:'En estas respuestas no necesitas 是. 不 se pronuncia bú delante de cuò o tài, que llevan cuarto tono. 很好 y 还可以 se muestran con sus tonos de diccionario; al hablar, los terceros tonos consecutivos cambian.',source:'S2 · pp. 36–43. Resumen de las expresiones y la práctica de clase.'},
@@ -91,9 +94,9 @@ export const grammar = [
  {id:'plural',title:'Hablar de más de una persona',tag:'们 · 也',body:'们 forma el plural de los pronombres personales. 也 significa «también» y se coloca antes del verbo.',pattern:'Pronombre + 们 / Sujeto + 也 + verbo',examples:[['我们是西班牙人。','Wǒmen shì Xībānyárén.','Somos españoles / españolas.'],['我也是中国人。','Wǒ yě shì Zhōngguórén.','Yo también soy chino / china.'],['认识你，我也很高兴。','Rènshi nǐ, wǒ yě hěn gāoxìng.','Yo también me alegro de conocerte.']],note:'他 y 她 se pronuncian igual (tā), pero se escriben de forma distinta.',source:'S2 · p. 11; S3 · pp. 22, 24–25. Primer ejemplo creado para practicar.'},
 ];
 
-grammar.push(...session4Grammar);
+grammar.push(...session4Grammar,...session5Grammar);
 export function grammarForSession(session){
- const ids={2:['names','how-are-you'],3:['nationality','questions','negative','plural'],4:['where-from','return-question','who','choose-question']};
+ const ids={2:['names','how-are-you'],3:['nationality','questions','negative','plural'],4:['where-from','return-question','who','choose-question'],5:['apologies','thanks','knowing','contrast','love']};
  return grammar.filter(g=>(ids[session]||[]).includes(g.id));
 }
 
@@ -123,11 +126,11 @@ export const questions = [
  {id:'q23',type:'choice',skill:'Diálogo',prompt:'Alguien dice 认识你很高兴. ¿Qué respuesta encaja?',options:['认识你，我也很高兴。','你姓什么？','不是。'],answer:'认识你，我也很高兴。',explanation:'«Yo también me alegro de conocerte». 也 aporta «también».',source:'S2 · pp. 9–11'},
  {id:'q24',type:'choice',skill:'Nacionalidades',prompt:'Completa «una persona francesa».',hanzi:'法国 ___',options:['们','吗','人','不'],answer:'人',explanation:'En estos gentilicios, añadimos 人 al país: 法国 + 人 = 法国人。',source:'S3 · p. 13'},
  {id:'q25',type:'choice',skill:'Diálogo',prompt:'Te preguntan qué tal estás. ¿Qué respuesta encaja?',hanzi:'你怎么样？',options:['我姓王。','我是中国人。','很好。','再见。'],answer:'很好。',explanation:'你怎么样？ (Nǐ zěnmeyàng?) pregunta «¿Qué tal estás?». 很好 (hěn hǎo) responde «Muy bien». También has trabajado 不错, 还可以 y 不太好.',source:'S2 · pp. 36–43'},
- {id:'x1',type:'choice',skill:'Ampliación',prompt:'¿Qué significa 谢谢?',hanzi:'谢谢',options:['Gracias','Adiós','Hola'],answer:'Gracias',explanation:'谢谢 (xièxie) significa «gracias». Es vocabulario extra propuesto, fuera del núcleo de U2.',source:'Ampliación · práctica creada',extra:true},
+ {id:'x1',type:'choice',skill:'Cortesía',prompt:'¿Qué significa 谢谢?',hanzi:'谢谢',options:['Gracias','Adiós','Hola'],answer:'Gracias',explanation:'谢谢 (xièxie) significa «gracias». Se trabaja en S5 junto con la respuesta 不客气.',source:'S5 · pp. 3, 6 · práctica creada',extra:false},
  {id:'x2',type:'pinyin',skill:'Ampliación',prompt:'Escribe el pinyin de «amigo / amiga».',hanzi:'朋友',answer:'péngyou',explanation:'朋友 es péngyou: segundo tono y tono neutro. Puedes escribir peng2you5.',source:'Ampliación · práctica creada',extra:true},
 ];
 
-questions.push(...session4Questions);
+questions.push(...session4Questions,...session5Questions);
 
 export function sessionsForSource(source){
  const ids=[...String(source).matchAll(/\bS([1-9]\d*)\b/g)].map(m=>+m[1]);
@@ -136,6 +139,7 @@ export function sessionsForSource(source){
 }
 export function vocabularyForSession(session){
  const list=vocabulary.filter(v=>v.extra||sessionsForSource(v.source).includes(Number(session)));
+ if(Number(session)===5)return list.sort((a,b)=>session5Priority(a)-session5Priority(b));
  return Number(session)===4?list.sort((a,b)=>session4Priority(a)-session4Priority(b)):list;
 }
 
@@ -164,13 +168,19 @@ questions.push(
 );
 for(const q of questions)q.sessionIds=sessionsForSource(q.source);
 
-const marks = {ā:'a1',á:'a2',ǎ:'a3',à:'a4',ē:'e1',é:'e2',ě:'e3',è:'e4',ī:'i1',í:'i2',ǐ:'i3',ì:'i4',ō:'o1',ó:'o2',ǒ:'o3',ò:'o4',ū:'u1',ú:'u2',ǔ:'u3',ù:'u4',ǖ:'v1',ǘ:'v2',ǚ:'v3',ǜ:'v4'};
 export function normalizePinyin(value) {
+  const tones={a:'āáǎà',e:'ēéěè',i:'īíǐì',o:'ōóǒò',u:'ūúǔù',v:'ǖǘǚǜ'};
   let s=String(value).trim().toLowerCase().normalize('NFC').replace(/u:/g,'v').replace(/ü/g,'v');
-  // Each syllable begins with a vowel or an optional initial; a tone digit closes it.
-  s=s.replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]/g,c=>marks[c]);
-  s=s.replace(/([a-zv]*)([1-4])([a-zv]*)/g,(_,a,t,b)=>a+b+t);
-  return s.replace(/[\s'’·-]/g,'').replace(/[05]/g,'');
+  // Convert numbered syllables to marked vowels before removing separators.
+  // A neutral syllable between two marked tones must retain its own boundary.
+  s=s.replace(/([a-zv]+)([0-5])/g,(_,syllable,tone)=>{
+    if(tone==='0'||tone==='5')return syllable;
+    let i=syllable.indexOf('a');if(i<0)i=syllable.indexOf('e');
+    if(i<0&&syllable.includes('ou'))i=syllable.indexOf('o');
+    if(i<0)for(let n=syllable.length-1;n>=0;n--)if(tones[syllable[n]]){i=n;break;}
+    return i<0?syllable:syllable.slice(0,i)+tones[syllable[i]][Number(tone)-1]+syllable.slice(i+1);
+  });
+  return s.replace(/[\s'’·-]/g,'');
 }
 export function normalizeHanzi(value) { return String(value).normalize('NFKC').replace(/[\s。！？?!，,.、]/g,''); }
 export function isCorrect(question,value) {return question.type==='pinyin' ? normalizePinyin(value)===normalizePinyin(question.answer) : question.type==='text'||question.type==='order' ? normalizeHanzi(value)===normalizeHanzi(question.answer) : value===question.answer;}

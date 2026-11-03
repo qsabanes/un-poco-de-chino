@@ -4,7 +4,7 @@ import {vocabulary,questions,sessionsForSource,grammarForSession,makeSession,isC
 import {cardLibrary,cardsForScope,reviewQueue,flashDefaults,validateFlashState,rateCard} from '../cards.js';
 import {session4Vocabulary,session4Questions} from '../session4.js';
 import {bookSupport,bookVocabulary} from '../book-support.js';
-assert.deepEqual(classes.map(c=>c.id),[1,2,3,4]);
+assert.deepEqual(classes.map(c=>c.id),[1,2,3,4,5]);
 assert.deepEqual(sessionsForSource('S4 · p. 3; S12 · p. 2'),[4,12]);
 assert.deepEqual([1,2,3,4].map(n=>cardsForScope('s'+n).length),[15,41,31,42]);
 assert.deepEqual(vocabularyForSession(4).filter(v=>!v.extra).slice(0,3).map(v=>v.hanzi),['哪里','呢','谁']);
