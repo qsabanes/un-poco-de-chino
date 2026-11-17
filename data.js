@@ -1,6 +1,8 @@
+import {session6Vocabulary,session6Shared,session6Grammar,session6Questions,session6Priority} from './session6.js';
+import {session7Vocabulary,session7Shared,session7Grammar,session7Questions,session7Priority,session7NumberReview} from './session7.js';
 import {session5Vocabulary,session5Shared,session5Grammar,session5Questions,session5Priority} from './session5.js';
 import {session4Vocabulary,session4Shared,session4Grammar,session4Questions,session4Priority} from './session4.js';
-// Contenido organizado por S1–S5, con referencias a los materiales de cada sesión. Los ejercicios son originales.
+// Contenido organizado por S1–S7, con referencias a los materiales de cada sesión. Los ejercicios son originales.
 export const vocabulary = [
   ['wo','我','wǒ','yo','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
   ['ni','你','nǐ','tú','personas','S1 · El idioma chino, pp. 25–27; S2 · p. 30'],
@@ -84,6 +86,10 @@ for(const v of vocabulary){if(v.id==='beijing')v.category='ciudades';if(session4
 vocabulary.push(...session4Vocabulary);
 for(const v of vocabulary){if(session5Shared[v.id])v.source+='; S5 · '+session5Shared[v.id];if(['xiexie','bu-keqi'].includes(v.id)){v.extra=false;v.source='S5 · pp. 2–3, 6';}}
 vocabulary.push(...session5Vocabulary);
+for(const v of vocabulary)if(session6Shared[v.id])v.source+='; S6 · '+session6Shared[v.id];
+vocabulary.push(...session6Vocabulary);
+for(const v of vocabulary){if(session7Shared[v.id])v.source+='; S7 · '+session7Shared[v.id];if(v.id.startsWith('num-')&&session7NumberReview.includes(Number(v.id.slice(4))))v.source+='; S7 · A · pp. 1, 3, 7, 10, 17–20 · repaso numérico';}
+vocabulary.push(...session7Vocabulary);
 
 export const grammar = [
  {id:'how-are-you',title:'Preguntar qué tal estás',tag:'怎么样',body:'En este saludo, 怎么样 pregunta «qué tal». Cambia el pronombre según a quién te diriges: 你, 您 o 你们.',pattern:'Persona + 怎么样？',examples:[['你怎么样？','Nǐ zěnmeyàng?','¿Qué tal estás?'],['你们怎么样？','Nǐmen zěnmeyàng?','¿Qué tal estáis?'],['很好。','Hěn hǎo.','Muy bien.'],['不错。','Bú cuò.','Bastante bien / no está mal.'],['还可以。','Hái kěyǐ.','Aceptable / voy tirando.'],['不太好。','Bú tài hǎo.','No muy bien.']],note:'En estas respuestas no necesitas 是. 不 se pronuncia bú delante de cuò o tài, que llevan cuarto tono. 很好 y 还可以 se muestran con sus tonos de diccionario; al hablar, los terceros tonos consecutivos cambian.',source:'S2 · pp. 36–43. Resumen de las expresiones y la práctica de clase.'},
@@ -94,9 +100,9 @@ export const grammar = [
  {id:'plural',title:'Hablar de más de una persona',tag:'们 · 也',body:'们 forma el plural de los pronombres personales. 也 significa «también» y se coloca antes del verbo.',pattern:'Pronombre + 们 / Sujeto + 也 + verbo',examples:[['我们是西班牙人。','Wǒmen shì Xībānyárén.','Somos españoles / españolas.'],['我也是中国人。','Wǒ yě shì Zhōngguórén.','Yo también soy chino / china.'],['认识你，我也很高兴。','Rènshi nǐ, wǒ yě hěn gāoxìng.','Yo también me alegro de conocerte.']],note:'他 y 她 se pronuncian igual (tā), pero se escriben de forma distinta.',source:'S2 · p. 11; S3 · pp. 22, 24–25. Primer ejemplo creado para practicar.'},
 ];
 
-grammar.push(...session4Grammar,...session5Grammar);
+grammar.push(...session4Grammar,...session5Grammar,...session6Grammar,...session7Grammar);
 export function grammarForSession(session){
- const ids={2:['names','how-are-you'],3:['nationality','questions','negative','plural'],4:['where-from','return-question','who','choose-question'],5:['apologies','thanks','knowing','contrast','love']};
+ const ids={2:['names','how-are-you'],3:['nationality','questions','negative','plural'],4:['where-from','return-question','who','choose-question'],5:['apologies','thanks','knowing','contrast','love'],6:session6Grammar.map(g=>g.id),7:session7Grammar.map(g=>g.id)};
  return grammar.filter(g=>(ids[session]||[]).includes(g.id));
 }
 
@@ -130,7 +136,7 @@ export const questions = [
  {id:'x2',type:'pinyin',skill:'Ampliación',prompt:'Escribe el pinyin de «amigo / amiga».',hanzi:'朋友',answer:'péngyou',explanation:'朋友 es péngyou: segundo tono y tono neutro. Puedes escribir peng2you5.',source:'Ampliación · práctica creada',extra:true},
 ];
 
-questions.push(...session4Questions,...session5Questions);
+questions.push(...session4Questions,...session5Questions,...session6Questions,...session7Questions);
 
 export function sessionsForSource(source){
  const ids=[...String(source).matchAll(/\bS([1-9]\d*)\b/g)].map(m=>+m[1]);
@@ -139,6 +145,8 @@ export function sessionsForSource(source){
 }
 export function vocabularyForSession(session){
  const list=vocabulary.filter(v=>v.extra||sessionsForSource(v.source).includes(Number(session)));
+ if(Number(session)===6)return list.sort((a,b)=>session6Priority(a)-session6Priority(b));
+ if(Number(session)===7)return list.sort((a,b)=>session7Priority(a)-session7Priority(b));
  if(Number(session)===5)return list.sort((a,b)=>session5Priority(a)-session5Priority(b));
  return Number(session)===4?list.sort((a,b)=>session4Priority(a)-session4Priority(b)):list;
 }

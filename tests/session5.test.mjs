@@ -4,7 +4,7 @@ import {vocabulary,questions,grammarForSession,makeSession,isCorrect} from '../d
 import {cardsForScope,cardLibrary} from '../cards.js';
 import {session5Questions} from '../session5.js';
 import {bookSupportHTML} from '../book-support.js';
-assert.deepEqual(classes.map(c=>c.id),[1,2,3,4,5]);
+assert.deepEqual(classes.map(c=>c.id),[1,2,3,4,5,6,7]);
 assert.deepEqual([1,2,3,4].map(n=>cardsForScope('s'+n).length),[15,41,31,42]);
 const deck=cardsForScope('s5');assert.equal(deck.length,27);
 for(const h of ['不好意思','对不起','没关系','谢谢','不客气','我不知道','知道','但是','爱','我爱你','很好','还可以','不太好'])assert.ok(deck.some(c=>c.hanzi===h),h);
